@@ -12,11 +12,7 @@ import { cn } from "@/lib/utils";
 
 
 export const Route = createFileRoute("/auth")({
-  component: () => (
-    <ClientOnly>
-      <AuthPage />
-    </ClientOnly>
-  ),
+  component: AuthPage,
   beforeLoad: async () => {
     const { data } = await supabase.auth.getSession();
     if (data.session) {
@@ -32,6 +28,11 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  if (!mounted) return null;
+
+
 
   const router = useRouter();
   const [email, setEmail] = useState("");
