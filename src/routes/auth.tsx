@@ -63,7 +63,7 @@ function AuthPage() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-2">
-          <img src={logo} alt="Restaurante e Pizzaria do Lúcio" className="h-28 w-28 mx-auto rounded-full" />
+          <img src={logoAsset.url} alt="Restaurante e Pizzaria do Lúcio" className="h-28 w-28 mx-auto rounded-full" />
           <h1 className="text-2xl font-bold">Restaurante e Pizzaria do Lúcio</h1>
           <p className="text-muted-foreground">Sistema financeiro</p>
         </div>
