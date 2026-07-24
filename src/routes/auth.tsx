@@ -41,23 +41,24 @@ function AuthPage() {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) {
         setMessage(error.message === "Invalid login credentials" ? "Email ou senha incorretos." : error.message);
+        setLoading(false);
       } else {
         await router.invalidate();
-        throw redirect({ to: "/" });
+        router.navigate({ to: "/" });
       }
     } else {
       const { error } = await supabase.auth.signUp({ email, password });
       if (error) {
         setMessage(error.message);
+        setLoading(false);
       } else {
         setMessage("Conta criada! Entrando...");
         await router.invalidate();
-        throw redirect({ to: "/" });
+        router.navigate({ to: "/" });
       }
     }
-
-    setLoading(false);
   }
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
