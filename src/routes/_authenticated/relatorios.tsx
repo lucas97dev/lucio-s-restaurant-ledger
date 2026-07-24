@@ -7,7 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Sun, Moon, Printer } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/relatorios")({
+export const Route = createFileRoute("/_authenticated/relatorios")({
   component: Relatorios,
   head: () => ({
     meta: [

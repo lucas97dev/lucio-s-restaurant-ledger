@@ -96,6 +96,7 @@ export function NewEntryDialog({ open, onOpenChange, editing }: { open: boolean;
     }
 
     setSaving(true);
+    const { data: userData } = await supabase.auth.getUser();
     const payload: any = {
       type: kind,
       amount: value,
@@ -111,11 +112,13 @@ export function NewEntryDialog({ open, onOpenChange, editing }: { open: boolean;
       qty_porcoes: kind === "entrada" && turno === "noite" ? q.porcoes : 0,
       qty_macarrao: kind === "entrada" && turno === "noite" ? q.macarrao : 0,
       qty_jantas: kind === "entrada" && turno === "noite" ? q.jantas : 0,
+      user_id: userData.user?.id,
     };
 
     const { error } = editing
       ? await supabase.from("transactions").update(payload).eq("id", editing.id)
       : await supabase.from("transactions").insert(payload);
+
 
     setSaving(false);
     if (error) return toast.error("Erro ao salvar: " + error.message);

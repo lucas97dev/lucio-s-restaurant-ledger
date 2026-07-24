@@ -13,7 +13,7 @@ import { Plus, Pencil, Trash2, UtensilsCrossed, GlassWater, Candy, IceCream } fr
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/cardapio")({
+export const Route = createFileRoute("/_authenticated/cardapio")({
   component: Cardapio,
   head: () => ({
     meta: [
@@ -140,11 +140,13 @@ function ItemDialog({ open, onOpenChange, editing, defaultCategory }: { open: bo
   const submit = async () => {
     if (!name.trim() || !price) return toast.error("Preencha nome e preço");
     setSaving(true);
-    const payload = { name: name.trim(), price: parseFloat(price.replace(",", ".")), category };
+    const { data: userData } = await supabase.auth.getUser();
+    const payload = { name: name.trim(), price: parseFloat(price.replace(",", ".")), category, user_id: userData.user?.id };
     const { error } = editing
       ? await supabase.from("menu_items").update(payload).eq("id", editing.id)
       : await supabase.from("menu_items").insert(payload);
     setSaving(false);
+
     if (error) return toast.error("Erro: " + error.message);
     toast.success(editing ? "Item atualizado" : "Item cadastrado");
     qc.invalidateQueries({ queryKey: ["menu"] });

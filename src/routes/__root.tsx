@@ -11,9 +11,8 @@ import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
-import { AppHeader } from "@/components/app-header";
-import { NewEntryDialog } from "@/components/new-entry-dialog";
 import { Toaster } from "sonner";
+
 
 function NotFoundComponent() {
   return (
@@ -95,18 +94,14 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [entryOpen, setEntryOpen] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background">
-        <AppHeader onNewEntry={() => setEntryOpen(true)} />
-        <main className="max-w-7xl mx-auto px-4 py-6">
-          <Outlet />
-        </main>
-        <NewEntryDialog open={entryOpen} onOpenChange={setEntryOpen} />
+        <Outlet />
         <Toaster theme="dark" position="top-center" richColors />
       </div>
     </QueryClientProvider>
   );
 }
+
