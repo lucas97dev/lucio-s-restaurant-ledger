@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { brl, categoryLabels } from "@/lib/format";
@@ -131,10 +131,11 @@ function ItemDialog({ open, onOpenChange, editing, defaultCategory }: { open: bo
   const [category, setCategory] = useState(defaultCategory);
   const [saving, setSaving] = useState(false);
 
-  useState(() => {
+  useEffect(() => {
+    if (!open) return;
     if (editing) { setName(editing.name); setPrice(String(editing.price)); setCategory(editing.category); }
     else { setName(""); setPrice(""); setCategory(defaultCategory); }
-  });
+  }, [editing, open, defaultCategory]);
 
   const submit = async () => {
     if (!name.trim() || !price) return toast.error("Preencha nome e preço");

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -55,9 +55,8 @@ export function NewEntryDialog({ open, onOpenChange, editing }: { open: boolean;
   const [q, setQ] = useState({ refeicoes: 0, marmitex: 0, pizzas: 0, porcoes: 0, macarrao: 0, jantas: 0 });
   const [saving, setSaving] = useState(false);
 
-  // hydrate for edit
-  useState(() => {
-    if (editing) {
+  useEffect(() => {
+    if (editing && open) {
       setKind(editing.type);
       setTurno(editing.turno);
       setAmount(String(editing.amount));
@@ -75,7 +74,7 @@ export function NewEntryDialog({ open, onOpenChange, editing }: { open: boolean;
         jantas: editing.qty_jantas ?? 0,
       });
     }
-  });
+  }, [editing, open]);
 
   const reset = () => {
     setKind(null); setTurno(null); setAmount(""); setPayment("");
