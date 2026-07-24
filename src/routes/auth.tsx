@@ -69,6 +69,29 @@ function AuthPage() {
           <p className="text-muted-foreground">Sistema financeiro</p>
         </div>
 
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            type="button"
+            onClick={() => setMode("login")}
+            className={cn(
+              "py-2 rounded-lg text-sm font-medium border-2 transition-colors",
+              mode === "login" ? "border-primary bg-primary/10 text-primary" : "border-border bg-secondary hover:border-primary/40"
+            )}
+          >
+            Entrar
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("signup")}
+            className={cn(
+              "py-2 rounded-lg text-sm font-medium border-2 transition-colors",
+              mode === "signup" ? "border-primary bg-primary/10 text-primary" : "border-border bg-secondary hover:border-primary/40"
+            )}
+          >
+            Criar conta
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
@@ -107,17 +130,8 @@ function AuthPage() {
             {mode === "login" ? "Entrar" : "Criar conta"}
           </Button>
         </form>
-
-        <div className="text-center">
-          <button
-            type="button"
-            onClick={() => setMode(mode === "login" ? "signup" : "login")}
-            className="text-sm text-primary hover:underline"
-          >
-            {mode === "login" ? "Não tem conta? Criar agora" : "Já tem conta? Entrar"}
-          </button>
-        </div>
       </Card>
     </div>
   );
 }
+
