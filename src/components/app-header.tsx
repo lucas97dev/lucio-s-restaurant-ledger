@@ -1,7 +1,10 @@
-import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, ListOrdered, FileBarChart2, UtensilsCrossed, Plus } from "lucide-react";
+import { Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { LayoutDashboard, ListOrdered, FileBarChart2, UtensilsCrossed, Plus, LogOut, User } from "lucide-react";
 import logoAsset from "@/assets/logo-lucio.png.asset.json";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
+import { useEffect, useState } from "react";
+
 
 const nav = [
   { to: "/", label: "Painel", icon: LayoutDashboard },
