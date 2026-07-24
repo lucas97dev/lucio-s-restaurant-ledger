@@ -11,7 +11,7 @@ import { NewEntryDialog } from "@/components/new-entry-dialog";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/lancamentos")({
+export const Route = createFileRoute("/_authenticated/lancamentos")({
   component: Lancamentos,
   head: () => ({
     meta: [

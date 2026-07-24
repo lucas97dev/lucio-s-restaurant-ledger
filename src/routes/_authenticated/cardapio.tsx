@@ -13,7 +13,7 @@ import { Plus, Pencil, Trash2, UtensilsCrossed, GlassWater, Candy, IceCream } fr
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-export const Route = createFileRoute("/cardapio")({
+export const Route = createFileRoute("/_authenticated/cardapio")({
   component: Cardapio,
   head: () => ({
     meta: [

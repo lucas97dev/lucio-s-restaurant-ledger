@@ -9,104 +9,136 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as RelatoriosRouteImport } from './routes/relatorios'
-import { Route as LancamentosRouteImport } from './routes/lancamentos'
-import { Route as CardapioRouteImport } from './routes/cardapio'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedRelatoriosRouteImport } from './routes/_authenticated/relatorios'
+import { Route as AuthenticatedLancamentosRouteImport } from './routes/_authenticated/lancamentos'
+import { Route as AuthenticatedCardapioRouteImport } from './routes/_authenticated/cardapio'
 
-const RelatoriosRoute = RelatoriosRouteImport.update({
-  id: '/relatorios',
-  path: '/relatorios',
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LancamentosRoute = LancamentosRouteImport.update({
-  id: '/lancamentos',
-  path: '/lancamentos',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CardapioRoute = CardapioRouteImport.update({
-  id: '/cardapio',
-  path: '/cardapio',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedRelatoriosRoute = AuthenticatedRelatoriosRouteImport.update({
+  id: '/relatorios',
+  path: '/relatorios',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedLancamentosRoute =
+  AuthenticatedLancamentosRouteImport.update({
+    id: '/lancamentos',
+    path: '/lancamentos',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedCardapioRoute = AuthenticatedCardapioRouteImport.update({
+  id: '/cardapio',
+  path: '/cardapio',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/cardapio': typeof CardapioRoute
-  '/lancamentos': typeof LancamentosRoute
-  '/relatorios': typeof RelatoriosRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/cardapio': typeof AuthenticatedCardapioRoute
+  '/lancamentos': typeof AuthenticatedLancamentosRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/cardapio': typeof CardapioRoute
-  '/lancamentos': typeof LancamentosRoute
-  '/relatorios': typeof RelatoriosRoute
+  '/cardapio': typeof AuthenticatedCardapioRoute
+  '/lancamentos': typeof AuthenticatedLancamentosRoute
+  '/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/': typeof AuthenticatedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/cardapio': typeof CardapioRoute
-  '/lancamentos': typeof LancamentosRoute
-  '/relatorios': typeof RelatoriosRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_authenticated/cardapio': typeof AuthenticatedCardapioRoute
+  '/_authenticated/lancamentos': typeof AuthenticatedLancamentosRoute
+  '/_authenticated/relatorios': typeof AuthenticatedRelatoriosRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/cardapio' | '/lancamentos' | '/relatorios'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cardapio' | '/lancamentos' | '/relatorios'
-  id: '__root__' | '/' | '/cardapio' | '/lancamentos' | '/relatorios'
+  to: '/cardapio' | '/lancamentos' | '/relatorios' | '/'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/_authenticated/cardapio'
+    | '/_authenticated/lancamentos'
+    | '/_authenticated/relatorios'
+    | '/_authenticated/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  CardapioRoute: typeof CardapioRoute
-  LancamentosRoute: typeof LancamentosRoute
-  RelatoriosRoute: typeof RelatoriosRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/relatorios': {
-      id: '/relatorios'
-      path: '/relatorios'
-      fullPath: '/relatorios'
-      preLoaderRoute: typeof RelatoriosRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/lancamentos': {
-      id: '/lancamentos'
-      path: '/lancamentos'
-      fullPath: '/lancamentos'
-      preLoaderRoute: typeof LancamentosRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/cardapio': {
-      id: '/cardapio'
-      path: '/cardapio'
-      fullPath: '/cardapio'
-      preLoaderRoute: typeof CardapioRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/relatorios': {
+      id: '/_authenticated/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AuthenticatedRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/lancamentos': {
+      id: '/_authenticated/lancamentos'
+      path: '/lancamentos'
+      fullPath: '/lancamentos'
+      preLoaderRoute: typeof AuthenticatedLancamentosRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/cardapio': {
+      id: '/_authenticated/cardapio'
+      path: '/cardapio'
+      fullPath: '/cardapio'
+      preLoaderRoute: typeof AuthenticatedCardapioRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedCardapioRoute: typeof AuthenticatedCardapioRoute
+  AuthenticatedLancamentosRoute: typeof AuthenticatedLancamentosRoute
+  AuthenticatedRelatoriosRoute: typeof AuthenticatedRelatoriosRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedCardapioRoute: AuthenticatedCardapioRoute,
+  AuthenticatedLancamentosRoute: AuthenticatedLancamentosRoute,
+  AuthenticatedRelatoriosRoute: AuthenticatedRelatoriosRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  CardapioRoute: CardapioRoute,
-  LancamentosRoute: LancamentosRoute,
-  RelatoriosRoute: RelatoriosRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
