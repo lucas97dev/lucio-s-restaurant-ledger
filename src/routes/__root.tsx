@@ -94,18 +94,14 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const [entryOpen, setEntryOpen] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
       <div className="min-h-screen bg-background">
-        <AppHeader onNewEntry={() => setEntryOpen(true)} />
-        <main className="max-w-7xl mx-auto px-4 py-6">
-          <Outlet />
-        </main>
-        <NewEntryDialog open={entryOpen} onOpenChange={setEntryOpen} />
+        <Outlet />
         <Toaster theme="dark" position="top-center" richColors />
       </div>
     </QueryClientProvider>
   );
 }
+
