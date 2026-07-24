@@ -1,5 +1,8 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
+import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { AppHeader } from "@/components/app-header";
+import { NewEntryDialog } from "@/components/new-entry-dialog";
 
 export const Route = createFileRoute("/_authenticated")({
   component: AuthenticatedLayout,
@@ -18,5 +21,15 @@ export const Route = createFileRoute("/_authenticated")({
 });
 
 function AuthenticatedLayout() {
-  return <Outlet />;
+  const [entryOpen, setEntryOpen] = useState(false);
+
+  return (
+    <>
+      <AppHeader onNewEntry={() => setEntryOpen(true)} />
+      <main className="max-w-7xl mx-auto px-4 py-6">
+        <Outlet />
+      </main>
+      <NewEntryDialog open={entryOpen} onOpenChange={setEntryOpen} />
+    </>
+  );
 }
