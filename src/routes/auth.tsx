@@ -1,5 +1,5 @@
-import { createFileRoute, redirect, useRouter, ClientOnly } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
 import logoAsset from "@/assets/logo-lucio.png.asset.json";
 import { cn } from "@/lib/utils";
+
 
 
 
