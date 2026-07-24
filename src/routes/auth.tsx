@@ -97,19 +97,19 @@ function AuthPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
-            <Input
+            <input
               id="email"
               type="email"
               placeholder="seu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="h-12 text-base"
+              className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             />
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Senha</Label>
-            <Input
+            <input
               id="password"
               type="password"
               placeholder="••••••••"
@@ -117,9 +117,10 @@ function AuthPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
               minLength={6}
-              className="h-12 text-base"
+              className="flex h-12 w-full rounded-md border border-input bg-transparent px-3 py-1 text-base shadow-sm transition-colors placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             />
           </div>
+
 
           {message && (
             <div className="rounded-lg bg-destructive/10 text-destructive px-4 py-3 text-sm text-center">
