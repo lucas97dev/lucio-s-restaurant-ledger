@@ -1,0 +1,122 @@
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
+import logo from "@/assets/logo-lucio.png";
+
+export const Route = createFileRoute("/auth")({
+  component: AuthPage,
+  beforeLoad: async () => {
+    const { data } = await supabase.auth.getSession();
+    if (data.session) {
+      throw redirect({ to: "/" });
+    }
+  },
+  head: () => ({
+    meta: [
+      { title: "Entrar • Restaurante e Pizzaria do Lúcio" },
+      { name: "description", content: "Acesse o sistema financeiro do restaurante." },
+    ],
+  }),
+});
+
+function AuthPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [mode, setMode] = useState<"login" | "signup">("login");
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<string | null>(null);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
+
+    if (mode === "login") {
+      const { error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) {
+        setMessage(error.message === "Invalid login credentials" ? "Email ou senha incorretos." : error.message);
+      } else {
+        await router.invalidate();
+        throw redirect({ to: "/" });
+      }
+    } else {
+      const { error } = await supabase.auth.signUp({ email, password });
+      if (error) {
+        setMessage(error.message);
+      } else {
+        setMessage("Conta criada! Entrando...");
+        await router.invalidate();
+        throw redirect({ to: "/" });
+      }
+    }
+
+    setLoading(false);
+  }
+
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
+      <Card className="w-full max-w-md p-6 sm:p-8 space-y-6">
+        <div className="text-center space-y-2">
+          <img src={logo} alt="Restaurante e Pizzaria do Lúcio" className="h-28 w-28 mx-auto rounded-full" />
+          <h1 className="text-2xl font-bold">Restaurante e Pizzaria do Lúcio</h1>
+          <p className="text-muted-foreground">Sistema financeiro</p>
+        </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
+            <Label htmlFor="email">Email</Label>
+            <Input
+              id="email"
+              type="email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              className="h-12 text-base"
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="password">Senha</Label>
+            <Input
+              id="password"
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
+              className="h-12 text-base"
+            />
+          </div>
+
+          {message && (
+            <div className="rounded-lg bg-destructive/10 text-destructive px-4 py-3 text-sm text-center">
+              {message}
+            </div>
+          )}
+
+          <Button type="submit" disabled={loading} className="w-full h-12 text-base">
+            {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {mode === "login" ? "Entrar" : "Criar conta"}
+          </Button>
+        </form>
+
+        <div className="text-center">
+          <button
+            type="button"
+            onClick={() => setMode(mode === "login" ? "signup" : "login")}
+            className="text-sm text-primary hover:underline"
+          >
+            {mode === "login" ? "Não tem conta? Criar agora" : "Já tem conta? Entrar"}
+          </button>
+        </div>
+      </Card>
+    </div>
+  );
+}
