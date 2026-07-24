@@ -14,7 +14,90 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      menu_items: {
+        Row: {
+          category: string
+          created_at: string
+          id: string
+          name: string
+          price: number
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          id?: string
+          name: string
+          price: number
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          id?: string
+          name?: string
+          price?: number
+        }
+        Relationships: []
+      }
+      transactions: {
+        Row: {
+          amount: number
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          occurred_at: string
+          payment_method: string | null
+          qty_jantas: number | null
+          qty_macarrao: number | null
+          qty_marmitex: number | null
+          qty_pizzas: number | null
+          qty_porcoes: number | null
+          qty_refeicoes: number | null
+          turno: string | null
+          type: string
+          vale_amount: number | null
+          vale_customer_name: string | null
+        }
+        Insert: {
+          amount: number
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          occurred_at?: string
+          payment_method?: string | null
+          qty_jantas?: number | null
+          qty_macarrao?: number | null
+          qty_marmitex?: number | null
+          qty_pizzas?: number | null
+          qty_porcoes?: number | null
+          qty_refeicoes?: number | null
+          turno?: string | null
+          type: string
+          vale_amount?: number | null
+          vale_customer_name?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          occurred_at?: string
+          payment_method?: string | null
+          qty_jantas?: number | null
+          qty_macarrao?: number | null
+          qty_marmitex?: number | null
+          qty_pizzas?: number | null
+          qty_porcoes?: number | null
+          qty_refeicoes?: number | null
+          turno?: string | null
+          type?: string
+          vale_amount?: number | null
+          vale_customer_name?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
