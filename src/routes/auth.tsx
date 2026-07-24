@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
-import logo from "@/assets/logo-lucio.png";
+import logoAsset from "@/assets/logo-lucio.png.asset.json";
 
 export const Route = createFileRoute("/auth")({
   component: AuthPage,
