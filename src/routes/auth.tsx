@@ -83,7 +83,7 @@ function AuthPage() {
           </button>
           <button
             type="button"
-            onClick={() => setMode("signup")}
+            onClick={() => { console.log("switch to signup"); setMode("signup"); }}
             className={cn(
               "py-2 rounded-lg text-sm font-medium border-2 transition-colors",
               mode === "signup" ? "border-primary bg-primary/10 text-primary" : "border-border bg-secondary hover:border-primary/40"
@@ -92,6 +92,7 @@ function AuthPage() {
             Criar conta
           </button>
         </div>
+
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
