@@ -28,18 +28,15 @@ export const Route = createFileRoute("/auth")({
 });
 
 function AuthPage() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  if (!mounted) return null;
-
-
-
   const router = useRouter();
+  const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [mode, setMode] = useState<"login" | "signup">("login");
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
+  useEffect(() => setMounted(true), []);
+
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -69,7 +66,10 @@ function AuthPage() {
   }
 
 
+  if (!mounted) return null;
+
   return (
+
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-2">
