@@ -66,7 +66,10 @@ function AuthPage() {
   }
 
 
+  if (!mounted) return null;
+
   return (
+
     <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
       <Card className="w-full max-w-md p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-2">
